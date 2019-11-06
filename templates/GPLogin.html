@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Log In</title>
+    <style>
+        body{
+                background: url("https://club.hihonor.com/data/images/2018/7/19/5f52a8bf6d4aeac25c2280ba8182a682.jpg");
+        }
+    </style>
+</head>
+<body>
+    <nav style="background-color:black">
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo right"><img src='https://img.xda-cdn.com/-8VIrOn_RYEyY5lHqwIiMaTmKpo=/http%3A%2F%2Fi.imgur.com%2FVsXGI.png' width='60px' height='60px'></a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="GPLogin.html">Sass</a></li>
+        <li><a href="GPSignUp.html">Components</a></li>
+        <li><a href="collapsible.html">JavaScript</a></li>
+        </ul>
+    </div>
+    </nav>
+    <br><br><br><br><br><br>
+    <center><h2 style="color: white">Log In</center>
+    <form class ='row' action='http://localhost:5000/login' method='POST'>
+        <div class='container'>
+            <div class='center'>
+                <div class="input-field col s6">
+                    <input type='text' name='name' style="color:aqua" >
+                    <label for='name'>Email/Username</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id ='password' type='password' name='password' style="color:aqua">
+                    <label for='password'>Password</label>
+                </div>
+                <a class="black waves-effect waves-light btn-small" style='color: white'>Submit</a>
+            </div>
+        </div>
+    </form>
+
+</body>         
+</html>

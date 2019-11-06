@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ML Test</title>
+    <!-- Compiled and minified CSS CDN-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/9daf8e90cb.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body{
+            background: url("https://club.hihonor.com/data/images/2018/7/19/5f52a8bf6d4aeac25c2280ba8182a682.jpg");
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark" style='background-color: black'>
+        <a class="navbar-brand" href="#"><img src='https://cdn4.iconfinder.com/data/icons/free-colorful-icons/360/google_play.png' style='width: 60px; height: 60px'></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+            <li class="nav-item dropdown active">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                About
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="http://127.0.0.1:5000/logged">About Us</a>
+                <a class="dropdown-item" href="http://127.0.0.1:5000/aboutgplay2">About Google Playstore</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' href="http://127.0.0.1:1997" target='_blank'>StatDash</a>
+            </li>
+            <li class="nav-item">
+                <a class='nav-link' href="#">P-review</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                User
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="http://127.0.0.1:5000">Log Out</a>
+                </div>
+            </li>
+            </ul>
+        </div>
+    </nav>
+    <center>
+    <div class="jumbotron" style='background-image: url("https://images.alphacoders.com/909/909469.jpg"); background-position: center'>
+        <h1 class="display-4" style='color: black'>Prediction Page</h1>
+        <p class="lead" style='color: black'>This is a simple Web-App analytical unit, designed for Machine Learning testing.</p>
+        <hr class="my-4">
+        <p style='color: black'>Please input the required variables and wait for the resulting rating.</p>
+        <a class="black btn btn-primary btn-lg" href="https://scikit-learn.org/" role="button" style='border-color:black'>Methodology</a>
+    </div>
+    </center>
+    <form class ='row' action='http://127.0.0.1:5000/predictresult' method='POST'>
+        <div class='container'>
+            <div class='center'>
+                <div class='row'>
+                    <div class='col s6' style='color: whitesmoke'>
+                        App Version:
+                        <div class="input-field inline">
+                            <input type='text' name='version' style="color:aqua" required>
+                            <label for='version'></label>
+                        </div>
+                        . x . x
+                    </div>
+                    <div class='col s6' style='color: whitesmoke'>
+                        App Price:
+                        <label>
+                            <input name="type" class='with-gap' type="radio" value='free' checked />
+                            <span style='color: whitesmoke'>Free</span>
+                        </label>
+                        <label>
+                            <input name="type" class='with-gap' type="radio" value='paid'/>
+                            <span style='color: whitesmoke'>Paid</span>
+                        </label>
+                        <div class="input-field inline">
+                            <input type='text' name='price' style="color:aqua">
+                            <label for='free'>in $</label>
+                        </div>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="input-field col s12">
+                        <p class="range-field" style='color:whitesmoke'>
+                            App Size (in MB)
+                            <input type="range" name='size' id="test5" min="0" max="500" value='0' step='1' />
+                        </p>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class="input-field col s6">
+                        <select class="custom-select" name='updated'>
+                        <option selected>Release Month</option>
+                        {% for month in ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']%}
+                            <option value="{{ loop.index0 }}">{{ month }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-field col s6">
+                        <select class="custom-select" name='android'>
+                        <option selected>Android Version Support</option>
+                        {% for android in df['Android Ver'].unique().tolist()%}
+                            <option value="{{ loop.index }}">{{ android }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="loader"></div>  
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <select class="custom-select" name='category'>
+                        <option selected>Select Category...</option>
+                        {% for category in df.Category.unique().tolist()%}
+                            <option value="{{ loop.index }}">{{ category|replace('Category_', '')|lower|capitalize }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class='row'>
+                    <div class='input-field col s12'>
+                        <select class="custom-select" name='genre'>
+                        <option selected>Select Specific Genre...</option>
+                        {% for genre in df.Genres.unique().tolist() %}
+                            <option value="{{ loop.index0 }}">{{ genre|replace('Genres_', '') }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <br><br>
+                <p style='color: whitesmoke'> Content Rating</p>
+                <div class='row'>
+                    <p>
+                        <div class='col s4'>
+                        <label>
+                            <input type="checkbox" class='radio' value='Everyone' name='content rating'/>
+                            <span style='color: whitesmoke'>Everyone</span>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class='radio' value='Mature 17+' name='content rating'/>
+                            <span style='color: whitesmoke'>Mature 17+</span>
+                        </label>
+                        </div>
+                        <div class='col s4'>
+                        <label>
+                            <input type="checkbox" class='radio' value='Everyone 10+' name='content rating'/>
+                            <span style='color: whitesmoke'>10+</span>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class='radio' value='Adults only 18+' name='content rating'/>
+                            <span style='color: whitesmoke'>Strict Adults only 18+</span>
+                        </label>
+                        </div>
+                        <div class='col s4'>
+                        <label>
+                            <input type="checkbox" class='radio' value='Teen' name='content rating'/>
+                            <span style='color: whitesmoke'>Teen(12-16)</span>
+                        </label>
+                        <br>
+                        <label>
+                            <input type="checkbox" class='radio' value='Unrated' name='content rating'/>
+                            <span style='color: whitesmoke'>Unrated</span>
+                        </label>
+                        </div>
+                    </p>
+            </div>
+            <button class="black waves-effect waves-light btn-small" style='color: white'>Submit</button> 
+        </div>
+    </form>
+</div>
+    <br><br>
+    <footer class="page-footer" style='background-color: black; margin-top:170px;'>
+        <div class="container" style='margin-left:100px; margin-right:150px;'>
+            <div class="row" style='width:1800px;'>
+            <div class="col l6 s12">
+                <h5 class="white-text">Development Server @Purwadhika Startup and Coding School</h5>
+                <p class="grey-text text-lighten-4">Disclaimer: Test product and NOT for use in real-life deployment.</p>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Technologies Used (within Python, HTML and JS)</h5>
+                <ul>
+                <li><a class="grey-text text-lighten-3" href="https://flask.palletsprojects.com/en/master/">&bull; Flask</a></li>
+                <li><a class="grey-text text-lighten-3" href="https://www.mysql.com/">&bull; MySQL</a></li>
+                <li><a class="grey-text text-lighten-3" href="https://getbootstrap.com/">&bull; Bootstrap CDN</a></li>
+                <li><a class="grey-text text-lighten-3" href="https://jinja.palletsprojects.com/en/2.10.x/">&bull; Jinja2</a></li>
+                <li><a class="grey-text text-lighten-3" href="https://pandas.pydata.org">&bull; Pandas</a></li>
+                </ul>
+            </div>
+            <div class="col l4 offset-l2 s12">
+                <img src='../static/images/technologies.png' height=100px width=300px>            
+            </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+            © 2019 Gabriel Timothy
+            <a class="grey-text text-lighten-4 right" href="https://dash.plot.ly/">Visualization with Dash Plotly</a>
+            </div>
+        </div>
+    </footer>
+</body>
+    <!-- Compiled and minified JavaScript CDN-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>      
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();   
+        });
+        $('.popover-dismiss').popover({
+            trigger: 'focus'
+        });
+        $(document).ready(function(){
+            $('select').formSelect();
+        });
+    </script>  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, options);
+        });
+    </script>  
+    <script>
+    // the selector will match all input controls of type :checkbox
+    // and attach a click event handler 
+        $("input:checkbox").on('click', function() {
+        // in the handler, 'this' refers to the box clicked on
+        var $box = $(this);
+        if ($box.is(":checked")) {
+            // the name of the box is retrieved using the .attr() method
+            // as it is assumed and expected to be immutable
+            var group = "input:checkbox[name='" + $box.attr("name") + "']";
+            // the checked state of the group/box on the other hand will change
+            // and the current value is retrieved using .prop() method
+            $(group).prop("checked", false);
+            $box.prop("checked", true);
+        } else {
+            $box.prop("checked", false);
+        }
+        });
+    </script>
+
+</html>
